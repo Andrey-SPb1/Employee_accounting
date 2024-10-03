@@ -20,5 +20,5 @@ public interface DepartmentService {
 
     boolean delete(Integer id);
 
-    Department findOrCreateAuthor(String name);
+    Department findOrCreateDepartment(String name);
 }

@@ -1,6 +1,8 @@
 package org.javacode.employee_accounting.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.javacode.employee_accounting.exception.AlreadyExistsException;
+import org.javacode.employee_accounting.exception.ResourceNotFoundException;
 import org.javacode.employee_accounting.mapper.create.EmployeeCreateEditMapper;
 import org.javacode.employee_accounting.mapper.response.EmployeeResponseMapper;
 import org.javacode.employee_accounting.model.dto.create.EmployeeCreateEditDto;
@@ -13,6 +15,8 @@ import org.javacode.employee_accounting.service.EmployeeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +38,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Optional<EmployeeResponseDto> findByUsername(String username) {
+        return employeeRepository.findByUsername(username)
+                .map(employeeResponseMapper::map);
+    }
+
+    @Override
     public List<EmployeeProjection> findAllEmployeeProjection() {
         return employeeRepository.findAllEmployeeProjection();
     }
@@ -48,10 +58,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeResponseDto create(EmployeeCreateEditDto employeeDto) {
+        checkUsernameAndEmail(employeeDto);
         return Optional.of(employeeDto)
                 .map(employeeCreateEditMapper::map)
                 .map(employee -> {
-                    employee.setDepartment(departmentService.findOrCreateAuthor(employee.getDepartment().getName()));
+                    employee.setDepartment(departmentService.findOrCreateDepartment(employee.getDepartment().getName()));
                     return employee;
                 })
                 .map(employeeRepository::save)
@@ -64,7 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findById(id)
                 .map(employee -> employeeCreateEditMapper.map(employeeDto, employee))
                 .map(employee -> {
-                    employee.setDepartment(departmentService.findOrCreateAuthor(employee.getDepartment().getName()));
+                    employee.setDepartment(departmentService.findOrCreateDepartment(employee.getDepartment().getName()));
                     return employee;
                 })
                 .map(employeeRepository::saveAndFlush)
@@ -80,5 +91,35 @@ public class EmployeeServiceImpl implements EmployeeService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        return employeeRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    @Override
+    public boolean userIsLocked(Long id) {
+        return employeeRepository.findById(id)
+                .map(Employee::isAccountNonLocked)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee with id " + id + " not found"));
+    }
+
+    @Override
+    public void setBlock(Long id, Boolean block) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee with id " + id + " not found"));
+        employee.setAccountNonLocked(block);
+    }
+
+    private void checkUsernameAndEmail(EmployeeCreateEditDto employeeDto) {
+        if (employeeRepository.existsByUsername(employeeDto.username())) {
+            throw new AlreadyExistsException("User with username " + employeeDto.username() + " already exists");
+        }
+
+        if (employeeRepository.existsByEmail(employeeDto.email())) {
+            throw new AlreadyExistsException("User with email " + employeeDto.email() + " already exists");
+        }
     }
 }

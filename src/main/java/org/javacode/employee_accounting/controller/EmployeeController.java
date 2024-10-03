@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,11 +45,13 @@ public class EmployeeController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR')")
     public EmployeeResponseDto create(@Validated @RequestBody EmployeeCreateEditDto employee) {
         return employeeService.create(employee);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR')")
     public EmployeeResponseDto update(@PathVariable("id") Long id,
                                       @Validated @RequestBody EmployeeCreateEditDto employee) {
         return employeeService.update(id, employee)
@@ -56,6 +59,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         return employeeService.delete(id) ? noContent().build() : notFound().build();
     }

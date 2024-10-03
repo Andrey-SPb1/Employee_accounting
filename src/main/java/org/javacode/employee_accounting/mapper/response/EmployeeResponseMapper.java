@@ -17,6 +17,7 @@ public class EmployeeResponseMapper implements Mapper<Employee, EmployeeResponse
         return new EmployeeResponseDto(
                 employee.getFirstName(),
                 employee.getLastName(),
+                employee.getUsername(),
                 employee.getPosition(),
                 employee.getSalary(),
                 departmentResponseMapper.map(employee.getDepartment())

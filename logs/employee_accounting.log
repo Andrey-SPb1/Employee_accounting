@@ -1,0 +1,20 @@
+2024-10-03T20:55:52.668+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Petr123 authenticated
+2024-10-03T20:55:52.717+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Petr123 authenticated
+2024-10-03T20:55:52.740+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Maria123 authenticated
+2024-10-03T20:55:52.819+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Maria123 authenticated
+2024-10-03T20:55:53.139+03:00  WARN 18008 --- [Test worker] o.j.e.service.impl.AuthServiceImpl       : test123 account is locked
+2024-10-03T20:55:53.176+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : testAdmin authenticated
+2024-10-03T20:55:53.255+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : testAdmin authenticated
+2024-10-03T20:55:53.325+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : testAdmin authenticated
+2024-10-03T20:55:53.418+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : testAdmin authenticated
+2024-10-03T20:55:53.449+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : testModerator authenticated
+2024-10-03T20:55:53.476+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : testUser authenticated
+2024-10-03T20:55:53.502+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : testAdmin authenticated
+2024-10-03T20:55:53.542+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Maria123 authenticated
+2024-10-03T20:55:53.575+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Maria123 authenticated
+2024-10-03T20:55:53.620+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Maria123 authenticated
+2024-10-03T20:55:53.656+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Maria123 authenticated
+2024-10-03T20:55:53.769+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Maria123 authenticated
+2024-10-03T20:55:53.810+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Petr123 authenticated
+2024-10-03T20:55:53.843+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Semen123 authenticated
+2024-10-03T20:55:53.877+03:00  INFO 18008 --- [Test worker] o.j.e.s.filter.JwtAuthenticationFilter   : Maria123 authenticated

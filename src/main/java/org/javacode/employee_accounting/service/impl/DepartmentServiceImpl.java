@@ -67,7 +67,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department findOrCreateAuthor(String name) {
+    public Department findOrCreateDepartment(String name) {
         return Objects.requireNonNullElseGet(departmentRepository.findByName(name),
                 () -> departmentRepository.save(Department.builder().name(name).build()));
     }
